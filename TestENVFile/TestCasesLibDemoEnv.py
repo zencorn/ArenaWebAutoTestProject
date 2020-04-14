@@ -1,5 +1,4 @@
 from PageComponents.HtmlPageElements import *
-import time
 from ToolsFile.Utility import *
 
 class testCasesLib():
@@ -37,8 +36,17 @@ class testCasesLib():
         pageUserLogin.txtUserPWD().send_keys(str_UserPWD)
         pageUserLogin.txtVerifyCode().click()
         # TODO: Verify Code
-        time.sleep(5)
+
         pageUserLogin.btnLogin().click()
 class adminUserTCs():
+    def tc_AdminAddCompetion():
+        pageAdmin.changeAdminPortal()
+        TestUtility.sleepTime(2)
+        pageAdmin.btnCompeMaga().click()
+        TestUtility.sleepTime(1)
+        pageAdmin.btnChalCompe().click()
+        TestUtility.sleepTime(1)
+        pageAdmin.btnAddNewChalCompe().click()
+
     def tc_addFund():
         pageAdmin.inconEnglish().click()

@@ -21,29 +21,23 @@ class webDrive():
         self.chrBrowser.maximize_window()
 
 confobj = TestUtility.conf
-webDriveObj = webDrive(confobj['ProductURL']['AgmBrokerHome'])
+webDriveObj = webDrive(confobj['ProductURL']['ArenaUserPortal'])
 # webDriveObjCRM = webDrive('https://usercenter.agmbroker.com')
 
 
 class pageAdmin():
     def changeAdminPortal():
-        webDriveObj.chrBrowser.get(confobj['ProductURL']['AgmAdmin'])
+        webDriveObj.chrBrowser.get(confobj['ProductURL']['ArenaAdmin'])
+    def btnCompeMaga():
+        btnCompeMaga = webDriveObj.chrBrowser.find_element_by_xpath('//*[@id="app"]/div/div[1]/div/ul/div/li[2]/div/span')
+        return btnCompeMaga
+    def btnChalCompe():
+        btnChalCompe = webDriveObj.chrBrowser.find_element_by_xpath('//*[@id="app"]/div/div[1]/div/ul/div/li[2]/ul/a[2]/li/span')
+        return btnChalCompe
+    def btnAddNewChalCompe():
+        btnAddNewChalCompe = webDriveObj.chrBrowser.find_element_by_xpath('//*[@id="app"]/div/div[2]/section/div/div[1]/button[2]/span')
+        return btnAddNewChalCompe
 
-    def inconEnglish():
-        inconEnglish = webDriveObj.chrBrowser.find_element_by_xpath('//*[@id="ChangeUS"]')
-        return inconEnglish
-    def txtAdmin():
-        txtAdmin = webDriveObj.chrBrowser.find_element_by_xpath('//*[@id="AdminLoginUsername"]')
-        return txtAdmin
-    def txtPwdAdmin():
-        txtPwdAdmin = webDriveObj.chrBrowser.find_element_by_xpath('//*[@id="AdminLoginPassword"]')
-        return txtPwdAdmin
-    def txtVerifyCode():
-        txtVerifyCode = webDriveObj.chrBrowser.find_element_by_xpath('//*[@id="AdminLoginCaptcha"]')
-        return txtVerifyCode
-    def btnLogin():
-        btnLogin = webDriveObj.chrBrowser.find_element_by_xpath('//*[@id="AdminLoginButton"]')
-        return btnLogin
 class PageAmgmHome():
     def linkLogin():
         linkLogin = 1
