@@ -2,33 +2,110 @@ __author__ = 'admin'
 import datetime
 import time
 import xlrd
+import os
 import xlsxwriter
 import openpyxl
 import random
 import requests
 import configparser
 import os
+
+import win32clipboard
+
+current_dir = os.path.abspath(__file__)
+
 # import jenkins
 
+class SelfDictionary(dict):
+    """ custom dict."""
+    # TODO: https://www.jianshu.com/p/61c10a59fdab
+    def __getattr__(self, key):
+        return self.get(key, None)
+
+    __setattr__ = dict.__setitem__
+    __delattr__ = dict.__delitem__
+
+class ConfigTool:
+    def __init__(self,filename,cfg=None):
+        """ @param file_name: file name without extension.
+            @param cfg: configuration file path.
+
+        """
+        env = {}
+        for key , value in os.environ.items():
+            if key.startswith('TEST_'):
+                env[key] = value
+        config = configparser.ConfigParser(env)
+        if cfg:
+            config.read(cfg)
+        else:
+            config.read(os.path.join(os.path.dirname(current_dir),
+                                     filename),encoding='utf-8')
+        for section in config.sections():
+            setattr(self,section,SelfDictionary())
+            for name,raw_value in config.items(section):
+                try:
+                    # Ugly fix to avoid '0' and '1' to be parsed as a
+                    # boolean value.
+                    # We raise an exception to goto fail^w parse it
+                    # as integer.
+                    if config.get(section, name) in ["0", "1"]:
+                        raise ValueError
+                    value = config.getboolean(section, name)
+                except ValueError:
+                    try:
+                        value = config.getint(section, name)
+                    except ValueError:
+                        value = config.get(section, name)
+                setattr(getattr(self,section),name,value)
+    def get(self,section):
+        """Get option.
+            @param section: section to fetch.
+            @return: option value.
+        """
+        try:
+            return getattr(self,section)
+        except AttributeError as e:
+            return False
 
 
+conf = ConfigTool('SystemConfig.ini')
 
 class TestUtility:
-    conf = configparser.ConfigParser()
-    strSysConfig = os.path.dirname(os.path.abspath(__file__)) + "\\" + 'SystemConfig.ini'
-    conf.read(strSysConfig, encoding="utf-8")
-    runType = int(conf['ExecEnvType']['execType'])
+    CURRENT_SYSTEM_DATE = 'May 01, 2020'
+    CURRENT_SYSTEM_TIME = '02:36:13'
+    CURRENT_CompeStart_Time = '11:22:00'
+    CURRENT_CompeStart_Date = '2020-05-02'
+    CURRENT_RegisEndDate = '1900-01-01'
+
+
+    runType = int(conf.get('ExecEnvType').get('exectype'))
+
     strConfigFile=1
     if(runType == 1):
         strConfigFile = os.path.dirname(os.path.abspath(__file__)) + "\\" + 'ProConfigure.ini'
-    elif(runType == 0):
+    elif(runType != 1):
         strConfigFile = os.path.dirname(os.path.abspath(__file__)) + "\\" + 'DemoENVProConfigure.ini'
 
-    conf.read(strConfigFile, encoding="utf-8")
+    # conf.read(strConfigFile, encoding="utf-8")
+    conf = ConfigTool(strConfigFile)
     strFileName = r'd:\\TestResultLog_'+ str(datetime.date.today().strftime("%Y_%m_%d")) + '.txt'
     # def __init__(self):
         #filePath = cf['LogFile']['userPWD']
 
+
+    def getRegisEndTime(dateStart):
+        str_year = str(dateStart[0:4]) + '-'
+        str_month = str(dateStart[4:6])+ '-'
+        str_day = dateStart[6:]
+        str_fulldate = str_year + str_month + str_day
+        my_date = datetime.datetime.strptime(str_fulldate, '%Y-%m-%d')
+        conf = ConfigTool(TestUtility.strConfigFile)
+        str_dur = conf.get('ArenaChallengeCompetitionInfo').get('competition_duration')
+        int_duran = int(str_dur)
+        delta = datetime.timedelta(days=int_duran)
+        newdate = my_date + delta
+        return str(newdate)
     def sleepTime(intSeconds):
         time.sleep(intSeconds)
     def convFlStr(self,val):
@@ -102,14 +179,14 @@ class TestUtility:
 
         # return WebDriverWait(driver,times).until(func)
 
-    def get_Jenkins():
-        JenkinsServer = jenkins.Jenkins('http://localhost:8080',username='admin',password = 'Admin')
-        print('Here')
-        user = JenkinsServer.get_whoami()
-        print(user['fullName'])
-        version = JenkinsServer.get_version()
-        print('Hello %s from Jenkins %s' % (user,version))
-        return
+    # def get_Jenkins():
+    #     JenkinsServer = jenkins.Jenkins('http://localhost:8080',username='admin',password = 'Admin')
+    #     print('Here')
+    #     user = JenkinsServer.get_whoami()
+    #     print(user['fullName'])
+    #     version = JenkinsServer.get_version()
+    #     print('Hello %s from Jenkins %s' % (user,version))
+    #     return
 
 
 

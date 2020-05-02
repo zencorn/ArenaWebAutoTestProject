@@ -18,6 +18,7 @@ def Suite():
     suite = unittest.TestSuite()
     # suite.addTest(BVTTest('callUserRegister_1001'))
     suite.addTest(BVTTest('calltc_adminAddCompe'))
+
     # suite.addTest(BVTTest('calltc_addFund'))
     return suite
 if __name__ == '__main__':
@@ -25,7 +26,7 @@ if __name__ == '__main__':
     sysConf = TestUtility.conf
     #定义报告文件权限，wb，表示有读写权限
     fp = open(filename,'wb')
-    strTitle = 'The testing report for '  + sysConf['ProductURL']['ArenaAdmin']
+    strTitle = 'The testing report for '  + sysConf.get('ProductURL').get('arenaadmin')
     runner = HTMLTestReportEN.HTMLTestRunner(
         stream = fp,
         title = strTitle,

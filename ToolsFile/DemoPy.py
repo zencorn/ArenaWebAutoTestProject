@@ -1,9 +1,25 @@
+
+import datetime
+import time
+
 from PageComponents.HtmlPageElements import *
+from ToolsFile.Utility import *
+from selenium.webdriver.common.keys import Keys
+
+sysConf = TestUtility.conf
 
 class testCaseLib():
-    def clickLogin():
-        PageTest.linkLogin().click()
-        PageRegist.linkForgetPWD().click()
+    def exeTc():
+       pageAdmin.changeAdminPortal()
 
-testCaseLib.clickLogin()
+
+
+
+
+
+
+
+
+
+testCaseLib.exeTc()
 
