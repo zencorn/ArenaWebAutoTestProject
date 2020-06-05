@@ -28,33 +28,54 @@ class webDrive():
 confobj = TestUtility.conf
 # webDriveObj = webDrive(confobj['ProductURL']['ArenaUserPortal'])
 # .get('ProductURL').get('arenauserportal')
+# webDriveObj = webDrive(confobj.get('ProductURL').get('arenaadmin'))
 webDriveObj = webDrive(confobj.get('ProductURL').get('arenauserportal'))
 # webDriveObjCRM = webDrive('https://usercenter.agmbroker.com')
 
 
 class pageAdmin():
+
+    def btnConfirmPublish():
+        TestUtility.sleepTime(2)
+        btnConfirmPublish = webDriveObj.chrBrowser.find_element_by_xpath(
+            '/html/body/div[7]/div/div[3]/button[2]/span')
+        # '/html/body/div[7]/div/div[3]/button[2]/span'
+        # '/html/body/div[7]/div/div[3]/button[2]/span'
+        # '/html/body/div[7]/div/div[3]/button[2]'
+        # '/html/body/div[7]/div/div[3]/button[2]/span'
+        return btnConfirmPublish
+    def btnPublishCompe():
+        TestUtility.sleepTime(2)
+        btnPublishCompe = webDriveObj.chrBrowser.find_element_by_xpath(
+            '//*[@id="app"]/div/div[2]/section/div/div[2]/div[3]/table/tbody/tr[1]/td[13]/div/button[6]/span')
+        return btnPublishCompe
+
+    def closeLevelConfigureDialog():
+        TestUtility.sleepTime(2)
+        closeLevelConfigureDialog = webDriveObj.chrBrowser.find_element_by_xpath(
+            '//*[@id="app"]/div/div[2]/section/div/div[7]/div/div[1]/button/i')
+        return closeLevelConfigureDialog
     def changeAdminPortal():
         TestUtility.sleepTime(3)
         str_time = webDriveObj.chrBrowser.find_element_by_xpath('//*[@id="app"]/header/div/div[1]/div/div[1]/span').text
         TestUtility.sleepTime(2)
-        str_Time = str_time[13:]
+        str_Time = str_time[14:]
         my_date = datetime.datetime.strptime(str_Time, '%H:%M:%S')
 
         delta = datetime.timedelta(minutes=5)
         newmins = my_date + delta
         TestUtility.CURRENT_CompeStart_Time = str(newmins)[11:]
         webDriveObj.chrBrowser.get(confobj.get('ProductURL').get('arenaadmin'))
-        time.sleep(8)
+        # time.sleep(8)
         # return system_GMT_time
     def btnCompeMaga():
         # TestUtility.sleepTime(3)
         # webDriveObj.chrBrowser.find_element_by_xpath('//*[@id="app"]/div/div[1]/div/ul/div/a[1]/li/span').click()
-        time.sleep(2)
+        time.sleep(8)
         btnCompeMaga = webDriveObj.chrBrowser.find_element_by_xpath('//*[@id="app"]/div/div[1]/div/ul/div/li[2]').find_element_by_tag_name('div').find_element_by_tag_name('span')
-                                                                    # '//*[@id="app"]/div/div[1]/div/ul/div/li[2]/div'
-                # btnCompeMaga.click()
         # btnCompeMaga = webDriveObj.chrBrowser.find_elements_by_link_text('比赛管理')
-                                                                    # '//*[@id="app"]/div/div[1]/div/ul/div/li[2]/div/span'
+        # '//*[@id="app"]/div/div[1]/div/ul/div/li[2]/div/span'
+
         return btnCompeMaga
 
     def btnChalCompe():
@@ -134,6 +155,7 @@ class pageAdmin():
         # 比赛时长(天)
         txtCompeDuration = webDriveObj.chrBrowser.find_element_by_xpath(
             '//*[@id="app"]/div/div[2]/section/div/div[4]/div/div[2]/form/div[12]/div/div/input')
+
         return txtCompeDuration
 
 
@@ -171,7 +193,7 @@ class pageAdmin():
     def btnRegistEndConfirm():
         TestUtility.sleepTime(2)
         btnRegistEndConfirm = webDriveObj.chrBrowser.find_element_by_xpath(
-            '//*[@id="app"]/div/div[2]/section/div/div[4]/div/div[3]/div/button[2]/span')
+            '/html/body/div[7]/div[2]/button[2]/span')
         return btnRegistEndConfirm
     def confPanel():
         TestUtility.sleepTime(2)
@@ -186,6 +208,7 @@ class pageAdmin():
             '//*[@id="app"]/div/div[2]/section/div/div[4]/div/div[3]/div/button[2]/span')
         return btnNextStep
     def btnAddLevel():
+        TestUtility.sleepTime(2)
         btnAddLevel = webDriveObj.chrBrowser.find_element_by_xpath(
             '//*[@id="app"]/div/div[2]/section/div/div[7]/div/div[2]/form/button/i')
         return btnAddLevel
@@ -199,6 +222,102 @@ class pageAdmin():
         txtLevOneFaileLine = webDriveObj.chrBrowser.find_element_by_xpath(
             '//*[@id="app"]/div/div[2]/section/div/div[7]/div/div[2]/div/div[3]/table/tbody/tr/td[3]/div/div/input')
         return txtLevOneFaileLine
+
+    def txtLevOnePromoteLine():
+        TestUtility.sleepTime(2)
+        txtLevOnePromoteLine = webDriveObj.chrBrowser.find_element_by_xpath(
+            '//*[@id="app"]/div/div[2]/section/div/div[7]/div/div[2]/div/div[3]/table/tbody/tr/td[4]/div/div/input')
+        return txtLevOnePromoteLine
+
+    def txtLevOneIniBalance():
+        TestUtility.sleepTime(2)
+        txtLevOneIniBalance = webDriveObj.chrBrowser.find_element_by_xpath(
+            '//*[@id="app"]/div/div[2]/section/div/div[7]/div/div[2]/div/div[3]/table/tbody/tr/td[5]/div/div/input')
+        return txtLevOneIniBalance
+
+    def combResetPermission():
+        TestUtility.sleepTime(2)
+        combResetPermission = webDriveObj.chrBrowser.find_element_by_xpath(
+            '//*[@id="app"]/div/div[2]/section/div/div[7]/div/div[2]/div/div[3]/table/tbody/tr/td[6]/div/div/div/input')
+        return combResetPermission
+
+    def btnConfirmAddLevel():
+        TestUtility.sleepTime(2)
+        btnConfirmAddLevel = webDriveObj.chrBrowser.find_element_by_xpath(
+            '//*[@id="app"]/div/div[2]/section/div/div[7]/div/div[2]/div/div[3]/table/tbody/tr/td[7]/div/button[1]/span')
+        return btnConfirmAddLevel
+
+    def txtLveTwoReward():
+        TestUtility.sleepTime(2)
+        txtLveTwoReward = webDriveObj.chrBrowser.find_element_by_xpath(
+            '//*[@id="app"]/div/div[2]/section/div/div[7]/div/div[2]/div/div[3]/table/tbody/tr[2]/td[2]/div/div/input')
+        return txtLveTwoReward
+
+    def txtLveThreeReward():
+        TestUtility.sleepTime(2)
+        txtLveThreeReward = webDriveObj.chrBrowser.find_element_by_xpath(
+            '//*[@id="app"]/div/div[2]/section/div/div[7]/div/div[2]/div/div[3]/table/tbody/tr[3]/td[2]/div/div/input')
+        return txtLveThreeReward
+
+    def txtLevTwoFaileLine():
+        TestUtility.sleepTime(2)
+        txtLevTwoFaileLine = webDriveObj.chrBrowser.find_element_by_xpath(
+            '//*[@id="app"]/div/div[2]/section/div/div[7]/div/div[2]/div/div[3]/table/tbody/tr[2]/td[3]/div/div/input')
+        return txtLevTwoFaileLine
+
+    def txtLevThreeFaileLine():
+        TestUtility.sleepTime(2)
+        txtLevThreeFaileLine = webDriveObj.chrBrowser.find_element_by_xpath(
+            '//*[@id="app"]/div/div[2]/section/div/div[7]/div/div[2]/div/div[3]/table/tbody/tr[3]/td[3]/div/div/input')
+        return txtLevThreeFaileLine
+
+    def txtLevTwoPromoteLine():
+        TestUtility.sleepTime(2)
+        txtLevTwoPromoteLine = webDriveObj.chrBrowser.find_element_by_xpath(
+            '//*[@id="app"]/div/div[2]/section/div/div[7]/div/div[2]/div/div[3]/table/tbody/tr[2]/td[4]/div/div/input')
+        return txtLevTwoPromoteLine
+
+    def txtLevThreePromoteLine():
+        TestUtility.sleepTime(2)
+        txtLevThreePromoteLine = webDriveObj.chrBrowser.find_element_by_xpath(
+            '//*[@id="app"]/div/div[2]/section/div/div[7]/div/div[2]/div/div[3]/table/tbody/tr[3]/td[4]/div/div/input')
+        return txtLevThreePromoteLine
+
+    def txtLevTwoIniBalance():
+        TestUtility.sleepTime(2)
+        txtLevTwoIniBalance = webDriveObj.chrBrowser.find_element_by_xpath(
+            '//*[@id="app"]/div/div[2]/section/div/div[7]/div/div[2]/div/div[3]/table/tbody/tr[2]/td[5]/div/div/input')
+        return txtLevTwoIniBalance
+
+    def txtLevThreeIniBalance():
+        TestUtility.sleepTime(2)
+        txtLevThreeIniBalance = webDriveObj.chrBrowser.find_element_by_xpath(
+            '//*[@id="app"]/div/div[2]/section/div/div[7]/div/div[2]/div/div[3]/table/tbody/tr[3]/td[5]/div/div/input')
+        return txtLevThreeIniBalance
+
+    def combResetTwoPermission():
+        TestUtility.sleepTime(2)
+        combResetTwoPermission = webDriveObj.chrBrowser.find_element_by_xpath(
+            '//*[@id="app"]/div/div[2]/section/div/div[7]/div/div[2]/div/div[3]/table/tbody/tr[2]/td[6]/div/div/div/input')
+        return combResetTwoPermission
+
+    def combResetThreePermission():
+        TestUtility.sleepTime(2)
+        combResetThreePermission = webDriveObj.chrBrowser.find_element_by_xpath(
+            '//*[@id="app"]/div/div[2]/section/div/div[7]/div/div[2]/div/div[3]/table/tbody/tr[3]/td[6]/div/div/div/input')
+        return combResetThreePermission
+
+    def btnConfirmTwoAddLevel():
+        TestUtility.sleepTime(2)
+        btnConfirmTwoAddLevel = webDriveObj.chrBrowser.find_element_by_xpath(
+            '//*[@id="app"]/div/div[2]/section/div/div[7]/div/div[2]/div/div[3]/table/tbody/tr/td[7]/div/button[1]/span')
+        return btnConfirmTwoAddLevel
+
+    def btnConfirmThreeAddLevel():
+        TestUtility.sleepTime(2)
+        btnConfirmThreeAddLevel = webDriveObj.chrBrowser.find_element_by_xpath(
+            '//*[@id="app"]/div/div[2]/section/div/div[7]/div/div[2]/div/div[3]/table/tbody/tr[3]/td[7]/div/button[1]/span')
+        return btnConfirmThreeAddLevel
 
 class PageAmgmHome():
     def linkLogin():
@@ -225,14 +344,19 @@ class pageUserInfo():
         linkDeposit = webDriveObj.chrBrowser.find_element_by_xpath('/html/body/div[1]/div/div/div/ul/li[3]/ul/li[1]/a')
         return linkDeposit
 class pageUserLogin():
+    def link_Login():
+        btnLogin = webDriveObj.chrBrowser.find_element_by_xpath('//*[@id="app"]/header/div/div[1]/div/div[2]/div/a[2]/button')
+
+        return btnLogin
     def txtVerifyCode():
-        txtVerifyCode = webDriveObj.chrBrowser.find_element_by_xpath('//*[@id="LoginCaptcha"]')
+        txtVerifyCode = webDriveObj.chrBrowser.find_element_by_xpath('//*[@id="loginbyaccount"]/div/div/div[2]/form/div/div[3]/div/div[1]/div/input')
         return txtVerifyCode
     def btnLogin():
-        btnLogin = webDriveObj.chrBrowser.find_element_by_xpath('//*[@id="user-login"]')
+        btnLogin = webDriveObj.chrBrowser.find_element_by_xpath('//*[@id="loginbyaccount"]/div/div/div[2]/form/div/div[5]/button')
+
         return btnLogin
     def txtUserPWD():
-        txtUserPWD = webDriveObj.chrBrowser.find_element_by_xpath('//*[@id="password"]')
+        txtUserPWD = webDriveObj.chrBrowser.find_element_by_xpath('//*[@id="loginbyaccount"]/div/div/div[2]/form/div/div[2]/div/div[1]/div/input')
         return txtUserPWD
     def iconEnglish():
         iconEnglish = webDriveObj.chrBrowser.find_element_by_xpath('//*[@id="ChangeUS"]/a/img')
@@ -240,7 +364,7 @@ class pageUserLogin():
     def txtLoginUser():
         # webDriveObj.chrBrowser.switch_to.window(webDriveObj.chrBrowser.window_handles[1])
         time.sleep(2)
-        txtLoginUser = webDriveObj.chrBrowser.find_element_by_xpath('//*[@id="username"]')
+        txtLoginUser = webDriveObj.chrBrowser.find_element_by_xpath('//*[@id="loginbyaccount"]/div/div/div[2]/form/div/div[1]/div/div[1]/div/input')
 
         return txtLoginUser
 class pageRegist():

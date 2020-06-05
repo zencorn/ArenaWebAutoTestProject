@@ -9,6 +9,8 @@ import random
 import requests
 import configparser
 import os
+import pymysql
+import numpy as np
 
 import win32clipboard
 
@@ -72,6 +74,9 @@ class ConfigTool:
 conf = ConfigTool('SystemConfig.ini')
 
 class TestUtility:
+    __priAttribute = 'Hi'
+    noneAttribute = 'Nape'
+
     CURRENT_SYSTEM_DATE = 'May 01, 2020'
     CURRENT_SYSTEM_TIME = '02:36:13'
     CURRENT_CompeStart_Time = '11:22:00'
@@ -92,6 +97,34 @@ class TestUtility:
     strFileName = r'd:\\TestResultLog_'+ str(datetime.date.today().strftime("%Y_%m_%d")) + '.txt'
     # def __init__(self):
         #filePath = cf['LogFile']['userPWD']
+
+
+    def getDBMT4UserList():
+        mt4TradeIdList = []
+        # # ====  Product DB Info =
+        # host = '15.164.69.45'
+        # user = 'jpl'
+        # pwd = 'q2Ayy2qPE6wKyqan'
+        # dbName = 'mt4_arena'
+
+        # ====  Test DB Info =
+        host = '54.223.243.21'
+        user = 'mtk_backoffice'
+        pwd = 'q2Ayy2qPE6wKyqan'
+        dbName = 'mt4_arena'
+
+        conn = pymysql.connect(host, user, pwd, dbName)
+        cursor = conn.cursor()
+        cursor.execute("select DISTINCT nick_name from mt4_users_info")
+        mt4TradeUserNameList = list(np.array(cursor.fetchall()))
+        a = np.array(mt4TradeUserNameList)
+        a[:,0]
+        mt4TradeUserNameList = a.tolist()
+
+        cursor.close()
+        conn.close()
+
+        return mt4TradeUserNameList
 
 
     def getRegisEndTime(dateStart):

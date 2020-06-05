@@ -5,6 +5,7 @@ from selenium.webdriver.common.keys import Keys
 sysConf = TestUtility.conf
 
 class testCasesLib():
+
     def tc_UserRegist_1001():
         pageAgmHome.linkLogin().click()
         time.sleep(2)
@@ -44,9 +45,143 @@ class testCasesLib():
         # TODO: Verify Code
 
         pageUserLogin.btnLogin().click()
+
+    def tc_UserJoinChallCompe_1004():
+        '''
+        () ->
+        Simulating the user UI operation of join the ChallenCompe
+        '''
+        #1: Get the demo user list
+        pendingUsers = []
+        pendingUsers = TestUtility.getDBMT4UserList()
+        # Run the loop
+        if(pendingUsers.__len__() > 0):
+            for i in range(pendingUsers.__len__()):
+                # 2: Login this user
+                userName = pendingUsers[i]
+                pageUserLogin.link_Login().click()
+                pageUserLogin.txtLoginUser().click()
+                pageUserLogin.txtLoginUser().send_keys(userName)
+                pageUserLogin.txtUserPWD().click()
+                pageUserLogin.txtUserPWD().send_keys('Aarena888')
+                pageUserLogin.txtVerifyCode().click()
+                # TODO: Verify Code
+                TestUtility.sleepTime(5)
+                pageUserLogin.btnLogin().click()
+                # 3: Open the target game
+
+
+
+
+
+            # 4: Join this game
+            # 5： logout this user
+
+
 class adminUserTCs():
+
+    ini_balance = 0
+    promote_persent = 0
+    falie_persent = 0
+
+    faileline_points_LevelOne = 0
+    promote_points_LevelOne = 0
+
+    promote_points_L2 = 0
+    faile_poinsts_L2 = 0
+
+    promote_points_L3 = 0
+    faile_poinsts_L3 = 0
+
+    def self_configLevelOne():
+        pageAdmin.confPanel().click()
+        pageAdmin.btnAddLevel().click()
+        pageAdmin.txtLveOneReward().click()
+        # pageAdmin.txtLveOneReward().send_keys(sysConf.get(
+        #     'ArenaChallengeCompetitionInfo').get('reward_points'))
+        pageAdmin.txtLveOneReward().send_keys('0')
+        # 'Set the competition faile value of Level1'
+        pageAdmin.txtLevOneFaileLine().click()
+        adminUserTCs.ini_balance = float(str(sysConf.get(
+            'ArenaChallengeCompetitionInfo').get('ini_balance')))
+
+        adminUserTCs.falie_persent = float(str(sysConf.get(
+            'ArenaChallengeCompetitionInfo').get('faileline_persent')))
+        adminUserTCs.faileline_points_LevelOne = str(adminUserTCs.ini_balance - adminUserTCs.ini_balance * adminUserTCs.falie_persent)
+        pageAdmin.txtLevOneFaileLine().send_keys(adminUserTCs.faileline_points_LevelOne)
+
+        # 'Set the promote value Level1'
+        pageAdmin.txtLevOnePromoteLine().click()
+        adminUserTCs.promote_persent = float(str(sysConf.get(
+            'ArenaChallengeCompetitionInfo').get('promote_persent')))
+        adminUserTCs.promote_points_LevelOne = adminUserTCs.ini_balance + adminUserTCs.ini_balance * adminUserTCs.promote_persent
+        pageAdmin.txtLevOnePromoteLine().send_keys(str(adminUserTCs.promote_points_LevelOne))
+
+        # 'set the initial balance Level1'
+        pageAdmin.txtLevOneIniBalance().click()
+        pageAdmin.txtLevOneIniBalance().send_keys(str(adminUserTCs.ini_balance))
+
+        # 'set the join permission Level1'
+        pageAdmin.combResetPermission().click()
+        pageAdmin.combResetPermission().send_keys(Keys.ARROW_DOWN)
+        pageAdmin.combResetPermission().send_keys(Keys.ENTER)
+
+        pageAdmin.btnConfirmAddLevel().click()
+
+    def self_configLevelTwo():
+        pageAdmin.txtLveTwoReward().click()
+        pageAdmin.txtLveTwoReward().send_keys(sysConf.get(
+            'ArenaChallengeCompetitionInfo').get('reward_points'))
+        # 'Set the competition faile value Level2'
+        pageAdmin.txtLevTwoFaileLine().click()
+        adminUserTCs.faile_poinsts_L2 = str(adminUserTCs.promote_points_LevelOne - adminUserTCs.promote_points_LevelOne * adminUserTCs.falie_persent)
+        pageAdmin.txtLevTwoFaileLine().send_keys(adminUserTCs.faile_poinsts_L2)
+
+        # 'Set the promote value 2'
+        pageAdmin.txtLevTwoPromoteLine().click()
+        adminUserTCs.promote_points_L2 = adminUserTCs.promote_points_LevelOne + adminUserTCs.promote_points_LevelOne * adminUserTCs.promote_persent
+        pageAdmin.txtLevTwoPromoteLine().send_keys(str(adminUserTCs.promote_points_L2))
+
+        # 'set the initial balance'
+        pageAdmin.txtLevTwoIniBalance().click()
+        pageAdmin.txtLevTwoIniBalance().send_keys(str(adminUserTCs.promote_points_LevelOne))
+
+        # 'set the join permission'
+        pageAdmin.combResetTwoPermission().click()
+        pageAdmin.combResetTwoPermission().send_keys(Keys.ARROW_DOWN)
+        pageAdmin.combResetTwoPermission().send_keys(Keys.ENTER)
+
+        pageAdmin.btnConfirmTwoAddLevel().click()
+
+    def self_configLevelThree():
+        pageAdmin.txtLveThreeReward().click()
+        pageAdmin.txtLveThreeReward().send_keys(sysConf.get(
+            'ArenaChallengeCompetitionInfo').get('reward_points'))
+        # 'Set the competition faile value Level2'
+        pageAdmin.txtLevThreeFaileLine().click()
+        adminUserTCs.faile_poinsts_L3 = str(
+            adminUserTCs.promote_points_L2 - adminUserTCs.promote_points_L2 * adminUserTCs.falie_persent)
+        pageAdmin.txtLevThreeFaileLine().send_keys(adminUserTCs.faile_poinsts_L3)
+
+        # 'Set the promote value 2'
+        pageAdmin.txtLevThreePromoteLine().click()
+        adminUserTCs.promote_points_L3 = adminUserTCs.promote_points_L2 + adminUserTCs.promote_points_L2 * adminUserTCs.promote_persent
+        pageAdmin.txtLevThreePromoteLine().send_keys(str(adminUserTCs.promote_points_L3))
+
+        # 'set the initial balance'
+        pageAdmin.txtLevThreeIniBalance().click()
+        pageAdmin.txtLevThreeIniBalance().send_keys(str(adminUserTCs.promote_points_L2))
+
+        # 'set the join permission'
+        pageAdmin.combResetThreePermission().click()
+        pageAdmin.combResetThreePermission().send_keys(Keys.ARROW_DOWN)
+        pageAdmin.combResetThreePermission().send_keys(Keys.ENTER)
+
+        pageAdmin.btnConfirmThreeAddLevel().click()
+
     def tc_AdminAddCompetion():
         pageAdmin.changeAdminPortal()
+        TestUtility.sleepTime(5)
         pageAdmin.btnCompeMaga().click()
         pageAdmin.btnChalCompe().click()
         pageAdmin.btnAddNewChalCompe().click()
@@ -124,25 +259,38 @@ class adminUserTCs():
         TestUtility.sleepTime(2)
         pageAdmin.btnRegistEndConfirm().click()
 
-        # 'Restal CompeDuration Value'
+        # 'Restall CompeDuration Value'
+        TestUtility.sleepTime(3)
         pageAdmin.txtCompeDuration().click()
-
+        TestUtility.sleepTime(1)
         pageAdmin.txtCompeDuration().send_keys(Keys.CONTROL, 'a')
         pageAdmin.txtCompeDuration().send_keys(sysConf.get(
             'ArenaChallengeCompetitionInfo').get('competition_duration'))
 
-        pageAdmin.confPanel().click()
+        pageAdmin.btnNextStep().click()
+        '''
+            Configure the competition the reward allocation.
+        '''
+        # 'Add level 2'
+        adminUserTCs.self_configLevelOne()
+        # 'Add level 2'
         pageAdmin.btnAddLevel().click()
-        pageAdmin.txtLveOneReward().click()
-        pageAdmin.txtLveOneReward().send_keys(sysConf.get(
-            'ArenaChallengeCompetitionInfo').get('reward_points'))
-        pageAdmin.txtLevOneFaileLine().click()
-        numA = float(str(sysConf.get(
-            'ArenaChallengeCompetitionInfo').get('ini_balance')))
-        numB = float(str(sysConf.get(
-            'ArenaChallengeCompetitionInfo').get('faileline_step')))
-        failePoinsts = str(numA - numB)
-        pageAdmin.txtLevOneFaileLine().send_keys(failePoinsts)
+        adminUserTCs.self_configLevelTwo()
+        # 'Add level 3'
+        pageAdmin.btnAddLevel().click()
+        adminUserTCs.self_configLevelThree()
+
+        #Close the level setting panel
+        pageAdmin.closeLevelConfigureDialog().click()
+        # Publish the new competition record
+        pageAdmin.btnPublishCompe().click()
+        # Conifrm the publish
+        pageAdmin.btnConfirmPublish().click()
+
+
+
+
+
 
 
 
