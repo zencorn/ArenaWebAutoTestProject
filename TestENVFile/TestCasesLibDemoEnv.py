@@ -69,6 +69,10 @@ class testCasesLib():
                 TestUtility.sleepTime(5)
                 pageUserLogin.btnLogin().click()
                 # 3: Open the target game
+                # pageContestList.btnLatestContest().click()
+                pageContestList.btnJoinContestFirstRow().click()
+
+
 
 
 

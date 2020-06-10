@@ -115,7 +115,9 @@ class TestUtility:
 
         conn = pymysql.connect(host, user, pwd, dbName)
         cursor = conn.cursor()
-        cursor.execute("select DISTINCT nick_name from mt4_users_info")
+        # cursor.execute("select DISTINCT nick_name from mt4_users_info")
+        cursor.execute("select UPhone from TempDemoUser")
+
         mt4TradeUserNameList = list(np.array(cursor.fetchall()))
         a = np.array(mt4TradeUserNameList)
         a[:,0]

@@ -343,11 +343,23 @@ class pageUserInfo():
     def linkDeposit():
         linkDeposit = webDriveObj.chrBrowser.find_element_by_xpath('/html/body/div[1]/div/div/div/ul/li[3]/ul/li[1]/a')
         return linkDeposit
+class pageContestList():
+    def btnLatestContest():
+        btnLatestContest = webDriveObj.chrBrowser.find_element_by_xpath('//*[@id="allComId"]/div/div/div/div[2]/div[1]/div/div[2]/div/div[1]/button')
+        return btnLatestContest
+    def btnJoinContestFirstRow():
+        btnJoinContestFirstRow = webDriveObj.chrBrowser.find_element_by_xpath('//*[@id="allComId"]/div/div/div/div[2]/div[1]/div/div[3]/div[3]/table/tbody/tr[1]/td/div/div/div[1]/div[3]/div/div/div[1]/button/span')
+
+
+        return btnJoinContestFirstRow
+    def btnExist():
+        btnExist = webDriveObj.chrBrowser.find_element_by_xpath('//*[@id="app"]/header/div/div[1]/div/div[2]/div/i')
+        return btnExist
 class pageUserLogin():
     def link_Login():
-        btnLogin = webDriveObj.chrBrowser.find_element_by_xpath('//*[@id="app"]/header/div/div[1]/div/div[2]/div/a[2]/button')
+        link_Login = webDriveObj.chrBrowser.find_element_by_xpath('//*[@id="app"]/header/div/div[1]/div/div[2]/div/a[2]/button')
 
-        return btnLogin
+        return link_Login
     def txtVerifyCode():
         txtVerifyCode = webDriveObj.chrBrowser.find_element_by_xpath('//*[@id="loginbyaccount"]/div/div/div[2]/form/div/div[3]/div/div[1]/div/input')
         return txtVerifyCode
