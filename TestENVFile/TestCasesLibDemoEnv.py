@@ -2,9 +2,10 @@ from PageComponents.HtmlPageElements import *
 from ToolsFile.Utility import *
 from selenium.webdriver.common.keys import Keys
 
-sysConf = TestUtility.conf
 
+sysConf = TestUtility.conf
 class testCasesLib():
+
 
     def tc_UserRegist_1001():
         pageAgmHome.linkLogin().click()
@@ -51,6 +52,7 @@ class testCasesLib():
         () ->
         Simulating the user UI operation of join the ChallenCompe
         '''
+        sysConf = TestUtility.conf
         #1: Get the demo user list
         pendingUsers = []
         pendingUsers = TestUtility.getDBMT4UserList()
@@ -66,18 +68,25 @@ class testCasesLib():
                 pageUserLogin.txtUserPWD().send_keys('Aarena888')
                 pageUserLogin.txtVerifyCode().click()
                 # TODO: Verify Code
-                TestUtility.sleepTime(5)
+                TestUtility.sleepTime(2)
                 pageUserLogin.btnLogin().click()
                 # 3: Open the target game
                 # pageContestList.btnLatestContest().click()
-                pageContestList.btnJoinContestFirstRow().click()
-
-
-
-
-
-
-
+                TestUtility.sleepTime(2)
+                pageContestList.btnEnterContestFirstRow().click()
+                TestUtility.sleepTime(3)
+                pageContestDetail.func_SwitchDefineGame('394')
+                TestUtility.sleepTime(2)
+                pageContestDetail.btnDetailJoinGame().click()
+                TestUtility.sleepTime(2)
+                pageContestDetail.txtPWDConfirm().click()
+                str_UserPWD = sysConf.get('ProductEndUserInfo').get('userpwd')
+                pageContestDetail.txtPWDConfirm().send_keys(str_UserPWD)
+                pageContestDetail.btnConfirm().click()
+                TestUtility.sleepTime(6)
+                pageContestDetail.btnExist().click()
+                webDriveObj.chrBrowser.get(confobj.get('ProductURL').get('arenauserportal'))
+                TestUtility.sleepTime(1)
             # 4: Join this game
             # 5： logout this user
 
