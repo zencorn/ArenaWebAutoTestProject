@@ -68,6 +68,7 @@ class testCasesLib():
                 pageUserLogin.txtUserPWD().send_keys('Aarena888')
                 pageUserLogin.txtVerifyCode().click()
                 # TODO: Verify Code
+                pageUserLogin.txtVerifyCode().send_keys('8889')
                 TestUtility.sleepTime(2)
                 pageUserLogin.btnLogin().click()
                 # 3: Open the target game
@@ -75,7 +76,7 @@ class testCasesLib():
                 TestUtility.sleepTime(2)
                 pageContestList.btnEnterContestFirstRow().click()
                 TestUtility.sleepTime(3)
-                pageContestDetail.func_SwitchDefineGame('394')
+                pageContestDetail.func_SwitchDefineGame('400')
                 TestUtility.sleepTime(2)
                 pageContestDetail.btnDetailJoinGame().click()
                 TestUtility.sleepTime(2)
